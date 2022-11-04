@@ -8,7 +8,7 @@ https://frontend-project-11-nine-tawny.vercel.app/
 
 ## 🚀 Hexlet-check Badge
 
-![linter-check](https://github.com/ValentinaFediakova/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)
+![hexlet-check](https://github.com/ValentinaFediakova/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)
 
 ## 🚀 Linter-check Badge
 
