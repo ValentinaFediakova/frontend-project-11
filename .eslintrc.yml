@@ -17,3 +17,10 @@ parserOptions:
 rules:
   no-console: 0
   import/extensions: 0
+  "import/no-extraneous-dependencies": [
+    "error", {
+       "devDependencies": true, 
+      #  "optionalDependencies": false, 
+      #  "peerDependencies": false,
+    }
+]
