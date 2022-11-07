@@ -1,16 +1,14 @@
 import axios from 'axios';
 
 const getRssData = (url) => {
-  console.log('url', url)
+  console.log('url', url);
   axios.get(url)
-    .then(function (response) {
+    .then((response) => {
       console.log(response);
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log(error);
-    })
-}
-
-
+    });
+};
 
 export default getRssData;
