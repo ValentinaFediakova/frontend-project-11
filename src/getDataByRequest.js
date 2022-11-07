@@ -12,12 +12,12 @@ const getRssData = (url) => {
     },
     withCredentials: true,
     credentials: 'same-origin',
-  }).then(response => {
+  }).then((response) => {
     console.log('response', response);
   })
-  .catch((error) => {
-    console.log('error', error);
-  });
+    .catch((error) => {
+      console.log('error', error);
+    });
 };
 
 export default getRssData;
