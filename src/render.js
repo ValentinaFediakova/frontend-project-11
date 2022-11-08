@@ -1,13 +1,11 @@
-
-export const renderValidateError = (path, value) => {
+const renderValidateError = (path, value) => {
   const errorHtmlElem = document.querySelector('.feedback');
   const inputHtml = document.getElementById('url-input');
 
-  errorHtmlElem.classList.add('text-danger')
+  errorHtmlElem.classList.add('text-danger');
   errorHtmlElem.textContent = value;
 
-  inputHtml.classList.add('is-invalid')
-}
+  inputHtml.classList.add('is-invalid');
+};
 
-
-
+export default renderValidateError;
