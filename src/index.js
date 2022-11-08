@@ -1,6 +1,5 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import parse from 'xml-parser';
 
-import getRssData from './getDataByRequest.js';
-
-getRssData('https://ru.hexlet.io/lessons.rss');
+import { app } from './app.js'
