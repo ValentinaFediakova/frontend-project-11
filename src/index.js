@@ -1,5 +1,9 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import parse from 'xml-parser';
 
-// import { app } from './app.js';
+import app from './app.js';
+
+addEventListener('DOMContentLoaded', (event) => {
+  console.log('DOMContentLoaded')
+  app();
+});
