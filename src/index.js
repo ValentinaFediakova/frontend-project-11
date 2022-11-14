@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import app from './app.js';
 
-addEventListener('DOMContentLoaded', (event) => {
-  console.log('DOMContentLoaded')
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded');
   app();
 });

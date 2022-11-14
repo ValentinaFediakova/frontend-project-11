@@ -9,4 +9,3 @@ export default {
     validateError_already_exist: 'RSS уже существует',
   },
 };
-
