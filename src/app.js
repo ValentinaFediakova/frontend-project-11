@@ -1,10 +1,13 @@
 import * as yup from 'yup';
 import onChange from 'on-change';
 import parser from 'xml-parser';
+
 import { v4 as uuidv4 } from 'uuid';
 
 import getRssData from './getDataByRequest.js';
-import { renderValidationMessage, renderFeeds, renderPosts } from './render.js';
+import {
+  renderValidationMessage, renderFeeds, renderPosts, renderToggleDisable,
+} from './render.js';
 import dictionaryData from './dictionary.js';
 
 const app = () => {
@@ -17,6 +20,7 @@ const app = () => {
     posts: [],
     validate: null,
     networkError: '',
+    isDataDownload: null,
   };
 
   const watchedState = onChange(state, (path, value) => {
@@ -31,6 +35,14 @@ const app = () => {
     if (path === 'posts') {
       renderPosts(watchedState.posts);
     }
+
+    if (path === 'networkError') {
+      renderValidationMessage(path, value);
+    }
+
+    if (path === 'isDataDownload') {
+      renderToggleDisable({ isDataDownload: value });
+    }
   });
 
   const setFeeds = (unicIdFeed, children) => {
@@ -39,9 +51,9 @@ const app = () => {
     feedData.id = unicIdFeed;
     feedData.title = `feed_${unicIdFeed}_title`;
     feedData.description = `feed_${unicIdFeed}_description`;
-
     const newKeyTitleFeed = `feed_${unicIdFeed}_title`;
     const newValueTitleFeed = children.find((el) => el.name === 'title').content;
+
     const newKeyDescFeed = `feed_${unicIdFeed}_description`;
     const newValueDescFeed = children.find((el) => el.name === 'description').content;
 
@@ -89,6 +101,7 @@ const app = () => {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    watchedState.isDataDownload = false;
 
     if (watchedState.validate !== null) {
       watchedState.validate = null;
@@ -98,13 +111,16 @@ const app = () => {
 
     urlValid.validate(inputValue.value, { abortEarly: false })
       .then(() => {
-        watchedState.urls.push(inputValue.value);
         const rssData = getRssData(inputValue.value);
         rssData.then((data) => {
           createStateAndDictionary(data.contents);
+          watchedState.isDataDownload = true;
           watchedState.validate = 'validateError_valid';
-          console.log('state', state);
-        });
+          watchedState.urls.push(inputValue.value);
+        })
+          .catch((err) => {
+            console.log('err', err);
+          });
       })
       .catch((err) => {
         console.log('err', err);

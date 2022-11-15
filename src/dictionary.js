@@ -5,10 +5,8 @@ const dictionaryData = i18next.createInstance();
 
 dictionaryData.init({
   lng: 'ru',
-  debug: true,
   ns: ['translations'],
   defaultNS: 'translations',
-
   resources,
 });
 

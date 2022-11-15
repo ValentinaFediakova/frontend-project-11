@@ -8,10 +8,17 @@ export const renderValidationMessage = (path, value) => {
   inputHtml.classList.remove('is-invalid');
   errorHtmlElem.classList.remove('text-success');
 
-  if (value === 'validateError_bad_link' || value === 'validateError_already_exist') {
+  if (value === 'validateError_bad_link' || value === 'validateError_already_exist' || path === 'networkError') {
     errorHtmlElem.classList.add('text-danger');
     inputHtml.classList.add('is-invalid');
-    const text = (value === 'validateError_valid') ? dictionaryData.t('validateError_valid') : (dictionaryData.t('validateError_already_exist'));
+    let text;
+    if (value === 'validateError_valid') {
+      text = dictionaryData.t('validateError_valid');
+    } else if (value === 'validateError_already_exist') {
+      text = dictionaryData.t('validateError_already_exist');
+    } else if (value === 'invalidResource') {
+      text = dictionaryData.t('invalidResource');
+    }
     errorHtmlElem.textContent = text;
     return;
   }
@@ -83,4 +90,23 @@ export const renderPosts = (posts) => {
     newLiElem.append(newButtonElem);
     namesPostsContainer.append(newLiElem);
   });
+};
+
+export const renderToggleDisable = (dataIsComlied) => {
+  console.log('hi');
+  const buttonElement = document.getElementById('btn-addNews');
+  const inputElement = document.getElementById('url-input');
+
+  if (dataIsComlied.isDataDownload === true) {
+    console.log('dataIsComlied.isDataDownload === true');
+    buttonElement.setAttribute('disabled', 'false');
+    inputElement.setAttribute('disabled', 'false');
+    return;
+  }
+
+  if (dataIsComlied.isDataDownload === false) {
+    console.log('dataIsComlied.isDataDownload === false');
+    buttonElement.setAttribute('disabled', 'true');
+    inputElement.setAttribute('disabled', 'true');
+  }
 };

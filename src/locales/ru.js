@@ -7,5 +7,6 @@ export default {
     validateError_valid: 'RSS успешно загружен',
     validateError_bad_link: 'Ссылка должна быть валидным URL',
     validateError_already_exist: 'RSS уже существует',
+    invalidResource: 'Ресурс не содержит валидный RSS',
   },
 };
