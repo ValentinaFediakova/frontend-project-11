@@ -1,9 +1,9 @@
 import * as yup from 'yup';
 
 import getRssData from './getDataByRequest.js';
-import { watchedState } from './state.js'
-import sheduleTimeOut from './timer.js'
-import { createStateAndDictionary } from './listeners.js'
+import { watchedState } from './state.js';
+import sheduleTimeOut from './timer.js';
+import { createStateAndDictionary } from './listeners.js';
 
 const app = () => {
   const inputValue = document.getElementById('url-input');
@@ -29,18 +29,16 @@ const app = () => {
           watchedState.urls.unshift(inputValue.value);
 
           if (watchedState.isTimerWork === false) {
-            sheduleTimeOut()
+            sheduleTimeOut();
             watchedState.isTimerWork = true;
           }
-
-        })
+        });
       })
       .catch((err) => {
         console.log('err', err);
         watchedState.validate = err.errors.join();
       });
   });
-
 };
 
 export default app;

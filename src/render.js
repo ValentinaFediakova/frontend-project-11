@@ -1,5 +1,4 @@
 import dictionaryData from './dictionary.js';
-import { state, watchedState } from './state.js'
 
 export const renderValidationMessage = (path, value) => {
   const errorHtmlElem = document.querySelector('.feedback');
@@ -10,7 +9,7 @@ export const renderValidationMessage = (path, value) => {
   errorHtmlElem.classList.remove('text-success');
 
   if (value === 'validateError_bad_link' || value === 'validateError_already_exist' || path === 'networkError') {
-    console.log('!!! bad link')
+    console.log('!!! bad link');
     errorHtmlElem.classList.add('text-danger');
     inputHtml.classList.add('is-invalid');
     let text;
@@ -41,7 +40,7 @@ export const renderFeeds = (feeds) => {
   namesFeedsContainer.textContent = '';
 
   feeds.forEach((item) => {
-    const fedId = item.id;
+    // const fedId = item.id;
     const newLiElem = document.createElement('li');
     const newH3Elem = document.createElement('h3');
     const newPElem = document.createElement('p');
@@ -62,6 +61,24 @@ export const renderFeeds = (feeds) => {
   });
 };
 
+const checkNewPost = (post) => {
+  const titlePosts = document.querySelectorAll('.post-link');
+
+  if (titlePosts.length === 0) {
+    return true;
+  }
+
+  let existedPost = true;
+
+  titlePosts.forEach((item) => {
+    if (item.textContent === post.title) {
+      existedPost = false;
+    }
+  });
+
+  return existedPost;
+};
+
 export const renderPosts = (postsInState) => {
   const postssContainer = document.querySelector('.posts');
   const namesPostsContainer = postssContainer.querySelector('.list-group');
@@ -71,10 +88,10 @@ export const renderPosts = (postsInState) => {
   // namesPostsContainer.textContent = '';
 
   postsInState.forEach((item) => {
-    const postId = item.id;
+    // const postId = item.id;
     const isItNewPost = checkNewPost(item);
 
-    console.log('isItNewPost', isItNewPost)
+    console.log('isItNewPost', isItNewPost);
 
     if (isItNewPost === false) {
       return;
@@ -104,8 +121,6 @@ export const renderPosts = (postsInState) => {
     // newAElem.textContent = dictionaryData.t(`post_${postId}_title`);
     newButtonElem.textContent = dictionaryData.t('postButton');
 
-    
-
     newLiElem.append(newAElem);
     newLiElem.append(newButtonElem);
     namesPostsContainer.append(newLiElem);
@@ -126,21 +141,3 @@ export const renderToggleDisable = (dataIsComlied) => {
     inputElement.setAttribute('disabled', 'true');
   }
 };
-
-const checkNewPost = (post) => {
-  const titlePosts = document.querySelectorAll('.post-link');
-
-  if (titlePosts.length === 0) {
-    return true;
-  }
-
-  let existedPost = true;
-
-  titlePosts.forEach((item) => {
-    if (item.textContent === post.title) {
-      existedPost = false;
-    }
-  })
-
-  return existedPost;
-}

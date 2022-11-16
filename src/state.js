@@ -31,7 +31,7 @@ export const watchedState = onChange(state, (path, value) => {
   if (path === 'posts') {
     setTimeout(() => {
       renderPosts(watchedState.posts);
-    }, 0)
+    }, 0);
   }
 
   if (path === 'networkError') {
