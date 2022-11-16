@@ -52,6 +52,4 @@ export const createStateAndDictionary = (rssString) => {
   setPosts(unicIdFeed, children);
 };
 
-export const whichModalWindowWasOpend = () => {
 
-};

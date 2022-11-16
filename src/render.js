@@ -85,13 +85,9 @@ export const renderPosts = (postsInState) => {
   const mainTitle = postssContainer.querySelector('.card-title');
   mainTitle.textContent = dictionaryData.t('postsTitle');
 
-  // namesPostsContainer.textContent = '';
-
   postsInState.forEach((item) => {
-    // const postId = item.id;
+    const postId = item.id;
     const isItNewPost = checkNewPost(item);
-
-    console.log('isItNewPost', isItNewPost);
 
     if (isItNewPost === false) {
       return;
@@ -106,20 +102,35 @@ export const renderPosts = (postsInState) => {
     newAElem.setAttribute('data-id', '2');
     newAElem.setAttribute('target', '_blank');
     newAElem.setAttribute('rel', 'noopener noreferrer');
-    // const postLink = dictionaryData.t(`post_${postId}_link`);
     const postLink = item.url;
     newAElem.setAttribute('href', `${postLink}`);
 
     newButtonElem.classList.add('btn', 'btn-outline-primary', 'btn-sm');
     newButtonElem.setAttribute('type', 'button');
     newButtonElem.setAttribute('data-id', '2');
+    newButtonElem.setAttribute('data-post-id', `${postId}`);
     newButtonElem.setAttribute('data-bs-toggle', 'modal');
     newButtonElem.setAttribute('data-bs-target', '#modal');
 
     newAElem.textContent = item.title;
 
-    // newAElem.textContent = dictionaryData.t(`post_${postId}_title`);
     newButtonElem.textContent = dictionaryData.t('postButton');
+
+    newButtonElem.addEventListener('click', () => {
+      newAElem.classList.remove('fw-bold', 'post-link');
+      newAElem.classList.add('fw-normal', 'link-secondary');
+      const modalWindow = document.querySelector('.modal');
+      const modalTitle = modalWindow.querySelector('.modal-title');
+      const modalDescription = modalWindow.querySelector('.modal-body');
+      const modalFullArticle = modalWindow.querySelector('.full-article');
+      const modalCloseButton = modalWindow.querySelector('.btn-secondary');
+  
+      modalTitle.textContent = item.title;
+      modalDescription.textContent = item.description;
+      modalFullArticle.setAttribute('href', `${postLink}`);
+      modalFullArticle.textContent = dictionaryData.t('modalReadFullVersion');
+      modalCloseButton.textContent = dictionaryData.t('modalClose');
+    });
 
     newLiElem.append(newAElem);
     newLiElem.append(newButtonElem);
@@ -141,3 +152,7 @@ export const renderToggleDisable = (dataIsComlied) => {
     inputElement.setAttribute('disabled', 'true');
   }
 };
+
+
+
+
