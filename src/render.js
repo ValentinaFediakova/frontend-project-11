@@ -124,7 +124,7 @@ export const renderPosts = (postsInState) => {
       const modalDescription = modalWindow.querySelector('.modal-body');
       const modalFullArticle = modalWindow.querySelector('.full-article');
       const modalCloseButton = modalWindow.querySelector('.btn-secondary');
-  
+
       modalTitle.textContent = item.title;
       modalDescription.textContent = item.description;
       modalFullArticle.setAttribute('href', `${postLink}`);
@@ -152,7 +152,3 @@ export const renderToggleDisable = (dataIsComlied) => {
     inputElement.setAttribute('disabled', 'true');
   }
 };
-
-
-
-

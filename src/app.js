@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import getRssData from './getDataByRequest.js';
 import { watchedState } from './state.js';
 import sheduleTimeOut from './timer.js';
-import { createStateAndDictionary } from './listeners.js';
+import createStateAndDictionary from './listeners.js';
 
 const app = () => {
   const inputValue = document.getElementById('url-input');

@@ -1,6 +1,6 @@
 import getRssData from './getDataByRequest';
 import { state, watchedState } from './state.js';
-import { createStateAndDictionary } from './listeners.js';
+import createStateAndDictionary from './listeners.js';
 
 const sheduleTimeOut = () => {
   const arrayPromisesDataRss = [];

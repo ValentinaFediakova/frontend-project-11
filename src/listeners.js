@@ -42,7 +42,7 @@ const setPosts = (unicIdFeed, children) => {
   watchedState.posts = [...postsData, ...watchedState.posts];
 };
 
-export const createStateAndDictionary = (rssString) => {
+const createStateAndDictionary = (rssString) => {
   const dataObj = parser(rssString);
   console.log('dataObj', dataObj);
   const { children } = dataObj.root.children[0];
@@ -52,4 +52,4 @@ export const createStateAndDictionary = (rssString) => {
   setPosts(unicIdFeed, children);
 };
 
-
+export default createStateAndDictionary;
