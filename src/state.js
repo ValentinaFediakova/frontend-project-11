@@ -12,6 +12,11 @@ export const state = {
   networkError: '',
   isDataDownload: null,
   isTimerWork: false,
+  uiState: {
+    openedPosts: [
+      // { postId: 1, isClicked: false },
+    ],
+  },
 };
 
 export const watchedState = onChange(state, (path, value) => {

@@ -3,9 +3,6 @@ import { state, watchedState } from './state.js'
 import { createStateAndDictionary } from './listeners.js'
 
 const sheduleTimeOut = () => {
-  // перебирать все урлы из стейта,
-  // записывать в массив промисов результат
-  // промис алл - все их решать и выводить данные
   const arrayPromisesDataRss = [];
   const stateUrl = state.urls;
   stateUrl.forEach((url) => {
@@ -17,7 +14,8 @@ const sheduleTimeOut = () => {
     items.forEach((item) => {
       watchedState.feeds = [];
       watchedState.posts = [];
-      createStateAndDictionary(item.contents);
+      const isDataFromTimer = true;
+      createStateAndDictionary(item.contents, isDataFromTimer);
       console.log('again')
     })
   })
