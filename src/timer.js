@@ -20,7 +20,7 @@ const sheduleTimeOut = () => {
     });
   });
 
-  setTimeout(sheduleTimeOut, 5000);
+  setTimeout(sheduleTimeOut, 960000);
 };
 
 export default sheduleTimeOut;
