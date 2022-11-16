@@ -93,15 +93,14 @@ export const renderPosts = (posts) => {
 };
 
 export const renderToggleDisable = (dataIsComlied) => {
-  console.log('hi');
+  // console.log('hi');
   const buttonElement = document.getElementById('btn-addNews');
   const inputElement = document.getElementById('url-input');
 
   if (dataIsComlied.isDataDownload === true) {
-    console.log('dataIsComlied.isDataDownload === true');
-    buttonElement.setAttribute('disabled', 'false');
-    inputElement.setAttribute('disabled', 'false');
-    return;
+    // console.log('dataIsComlied.isDataDownload === true');
+    buttonElement.removeAttribute('disabled');
+    inputElement.removeAttribute('disabled');
   }
 
   if (dataIsComlied.isDataDownload === false) {
