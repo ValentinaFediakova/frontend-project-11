@@ -70,15 +70,14 @@ export const renderFeeds = (feeds) => {
 };
 
 export const renderPosts = (state) => {
-  const postsInState = state.posts;
   const postssContainer = document.querySelector('.posts');
   const namesPostsContainer = postssContainer.querySelector('.list-group');
   const mainTitle = postssContainer.querySelector('.card-title');
   mainTitle.textContent = dictionaryData.t('postsTitle');
+  const statePosts = state.posts;
 
-  // у каждого поста собирать АЙДИ и группировать их
-
-  postsInState.forEach((item) => {
+  for(let i = statePosts.length - 1; i >= 0; i--) {
+    const item = statePosts[i];
     const postId = item.id;
     let isPostExist = false;
     const allSamePostsInHtml = document.querySelectorAll('[data-post-Id]');
@@ -117,9 +116,9 @@ export const renderPosts = (state) => {
   
       newLiElem.append(newAElem);
       newLiElem.append(newButtonElem);
-      namesPostsContainer.append(newLiElem);
+      namesPostsContainer.prepend(newLiElem);
     }
-  });
+  }
 };
 
 export const renderToggleDisable = (dataIsComlied) => {
