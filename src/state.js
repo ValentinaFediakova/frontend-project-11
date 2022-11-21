@@ -1,20 +1,20 @@
 import onChange from 'on-change';
 
 import {
-  renderValidationMessage, renderFeeds, renderPosts, renderToggleDisable,
+  renderValidationMessage, renderFeeds, renderPosts, renderToggleDisable, renderPageWithOpenedModal,
 } from './render.js';
 
 export const state = {
   urls: [],
   feeds: [],
   posts: [],
+  unicIdFeed: [],
   validate: null,
   networkError: '',
   isDataDownload: null,
   isTimerWork: false,
   uiState: {
     openedPosts: [
-      // { postId: 1, isClicked: false },
     ],
   },
 };
@@ -30,7 +30,7 @@ export const watchedState = onChange(state, (path, value) => {
 
   if (path === 'posts') {
     setTimeout(() => {
-      renderPosts(watchedState.posts);
+      renderPosts(watchedState);
     }, 0);
   }
 
@@ -40,5 +40,9 @@ export const watchedState = onChange(state, (path, value) => {
 
   if (path === 'isDataDownload') {
     renderToggleDisable({ isDataDownload: value });
+  }
+
+  if (path === 'uiState.openedPosts') {
+    renderPageWithOpenedModal(watchedState.posts, watchedState.uiState.openedPosts);
   }
 });

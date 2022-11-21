@@ -1,4 +1,5 @@
 import dictionaryData from './dictionary.js';
+import { openedModalWindow } from './listeners.js';
 
 export const renderValidationMessage = (path, value) => {
   const errorHtmlElem = document.querySelector('.feedback');
@@ -9,7 +10,6 @@ export const renderValidationMessage = (path, value) => {
   errorHtmlElem.classList.remove('text-success');
 
   if (value === 'validateError_bad_link' || value === 'validateError_already_exist' || path === 'networkError') {
-    console.log('!!! bad link');
     errorHtmlElem.classList.add('text-danger');
     inputHtml.classList.add('is-invalid');
     let text;
@@ -35,106 +35,90 @@ export const renderFeeds = (feeds) => {
   const feedsContainer = document.querySelector('.feeds');
   const namesFeedsContainer = feedsContainer.querySelector('.list-group');
   const mainTitle = feedsContainer.querySelector('.card-title');
+  const allIdFeedInHtml = document.querySelectorAll('[data-feed-id]');
   mainTitle.textContent = dictionaryData.t('feedsTitle');
 
-  namesFeedsContainer.textContent = '';
-
   feeds.forEach((item) => {
-    // const fedId = item.id;
-    const newLiElem = document.createElement('li');
-    const newH3Elem = document.createElement('h3');
-    const newPElem = document.createElement('p');
 
-    newLiElem.classList.add('list-group-item', 'border-0', 'border-end-0');
-    newH3Elem.classList.add('h6', 'm-0');
-    newPElem.classList.add('m-0', 'small', 'text-black-50');
+    let isIdRendered = false;
 
-    // newH3Elem.textContent = dictionaryData.t(`feed_${fedId}_title`);
-    // newPElem.textContent = dictionaryData.t(`feed_${fedId}_description`);
+    allIdFeedInHtml.forEach((feddIdInHtml) => {
+      if (feddIdInHtml.dataset.feedId === item.id) {
+        isIdRendered = true;
+      }
+    })
 
-    newH3Elem.textContent = item.title;
-    newPElem.textContent = item.description;
-
-    newLiElem.append(newH3Elem);
-    newLiElem.append(newPElem);
-    namesFeedsContainer.append(newLiElem);
-  });
-};
-
-const checkNewPost = (post) => {
-  const titlePosts = document.querySelectorAll('.post-link');
-
-  if (titlePosts.length === 0) {
-    return true;
-  }
-
-  let existedPost = true;
-
-  titlePosts.forEach((item) => {
-    if (item.textContent === post.title) {
-      existedPost = false;
+    if (isIdRendered === false) {
+      const newLiElem = document.createElement('li');
+      const newH3Elem = document.createElement('h3');
+      const newPElem = document.createElement('p');
+  
+      newLiElem.classList.add('list-group-item', 'border-0', 'border-end-0');
+      newLiElem.setAttribute('data-feed-id', `${item.id}`)
+      newH3Elem.classList.add('h6', 'm-0');
+      newPElem.classList.add('m-0', 'small', 'text-black-50');
+  
+      newH3Elem.textContent = item.title;
+      newPElem.textContent = item.description;
+  
+      newLiElem.append(newH3Elem);
+      newLiElem.append(newPElem);
+      namesFeedsContainer.prepend(newLiElem);
     }
-  });
 
-  return existedPost;
+  });
 };
 
-export const renderPosts = (postsInState) => {
+export const renderPosts = (state) => {
+  const postsInState = state.posts;
   const postssContainer = document.querySelector('.posts');
   const namesPostsContainer = postssContainer.querySelector('.list-group');
   const mainTitle = postssContainer.querySelector('.card-title');
   mainTitle.textContent = dictionaryData.t('postsTitle');
 
+  // у каждого поста собирать АЙДИ и группировать их
+
   postsInState.forEach((item) => {
     const postId = item.id;
-    const isItNewPost = checkNewPost(item);
+    let isPostExist = false;
+    const allSamePostsInHtml = document.querySelectorAll('[data-post-Id]');
 
-    if (isItNewPost === false) {
-      return;
+    allSamePostsInHtml.forEach((item) => {
+      if (item.dataset.postId === postId) {
+        isPostExist = true;
+      }
+    })
+
+    if (isPostExist === false) {
+      const newLiElem = document.createElement('li');
+      const newAElem = document.createElement('a');
+      const newButtonElem = document.createElement('button');
+  
+      newLiElem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
+      newAElem.classList.add('fw-bold', 'post-link');
+      newAElem.setAttribute('data-id', '2');
+      newAElem.setAttribute('target', '_blank');
+      newAElem.setAttribute('rel', 'noopener noreferrer');
+      const postLink = item.url;
+      newAElem.setAttribute('href', `${postLink}`);
+  
+      newButtonElem.classList.add('btn', 'btn-outline-primary', 'btn-sm');
+      newButtonElem.setAttribute('type', 'button');
+      newButtonElem.setAttribute('data-id', '2');
+      newButtonElem.setAttribute('data-bs-toggle', 'modal');
+      newButtonElem.setAttribute('data-bs-target', '#modal');
+  
+      newAElem.textContent = item.title;
+      newAElem.setAttribute('data-post-id', `${postId}`);
+  
+      newButtonElem.textContent = dictionaryData.t('postButton');
+  
+      openedModalWindow(newButtonElem, postId, state);
+  
+      newLiElem.append(newAElem);
+      newLiElem.append(newButtonElem);
+      namesPostsContainer.append(newLiElem);
     }
-
-    const newLiElem = document.createElement('li');
-    const newAElem = document.createElement('a');
-    const newButtonElem = document.createElement('button');
-
-    newLiElem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
-    newAElem.classList.add('fw-bold', 'post-link');
-    newAElem.setAttribute('data-id', '2');
-    newAElem.setAttribute('target', '_blank');
-    newAElem.setAttribute('rel', 'noopener noreferrer');
-    const postLink = item.url;
-    newAElem.setAttribute('href', `${postLink}`);
-
-    newButtonElem.classList.add('btn', 'btn-outline-primary', 'btn-sm');
-    newButtonElem.setAttribute('type', 'button');
-    newButtonElem.setAttribute('data-id', '2');
-    newButtonElem.setAttribute('data-post-id', `${postId}`);
-    newButtonElem.setAttribute('data-bs-toggle', 'modal');
-    newButtonElem.setAttribute('data-bs-target', '#modal');
-
-    newAElem.textContent = item.title;
-
-    newButtonElem.textContent = dictionaryData.t('postButton');
-
-    newButtonElem.addEventListener('click', () => {
-      newAElem.classList.remove('fw-bold', 'post-link');
-      newAElem.classList.add('fw-normal', 'link-secondary');
-      const modalWindow = document.querySelector('.modal');
-      const modalTitle = modalWindow.querySelector('.modal-title');
-      const modalDescription = modalWindow.querySelector('.modal-body');
-      const modalFullArticle = modalWindow.querySelector('.full-article');
-      const modalCloseButton = modalWindow.querySelector('.btn-secondary');
-
-      modalTitle.textContent = item.title;
-      modalDescription.textContent = item.description;
-      modalFullArticle.setAttribute('href', `${postLink}`);
-      modalFullArticle.textContent = dictionaryData.t('modalReadFullVersion');
-      modalCloseButton.textContent = dictionaryData.t('modalClose');
-    });
-
-    newLiElem.append(newAElem);
-    newLiElem.append(newButtonElem);
-    namesPostsContainer.append(newLiElem);
   });
 };
 
@@ -151,4 +135,36 @@ export const renderToggleDisable = (dataIsComlied) => {
     buttonElement.setAttribute('disabled', 'true');
     inputElement.setAttribute('disabled', 'true');
   }
+};
+
+export const renderPageWithOpenedModal = (allPosts, openedPosts) => {
+  const allrenderedPosts = document.querySelectorAll('[data-post-id]');
+
+  const modalWindow = document.querySelector('.modal');
+  const modalTitle = modalWindow.querySelector('.modal-title');
+  const modalDescription = modalWindow.querySelector('.modal-body');
+  const modalFullArticle = modalWindow.querySelector('.full-article');
+  const modalCloseButton = modalWindow.querySelector('.btn-secondary');
+
+  modalFullArticle.textContent = dictionaryData.t('modalReadFullVersion');
+  modalCloseButton.textContent = dictionaryData.t('modalClose');
+
+  openedPosts.forEach((openedpost) => {
+    allrenderedPosts.forEach((node) => {
+      if (node.getAttribute('data-post-id') === openedpost.postId) {
+        if (!node.classList.contains('fw-normal')) {
+          node.classList.add('fw-normal', 'link-secondary');
+          node.classList.remove('fw-bold');
+        }
+      }
+    });
+
+    allPosts.forEach((post) => {
+      if (post.id === openedpost.postId) {
+        modalTitle.textContent = post.title;
+        modalDescription.textContent = post.description;
+        modalFullArticle.setAttribute('href', `${post.url}`);
+      }
+    });
+  });
 };

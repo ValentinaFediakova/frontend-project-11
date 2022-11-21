@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import getRssData from './getDataByRequest.js';
 import { watchedState } from './state.js';
 import sheduleTimeOut from './timer.js';
-import createStateAndDictionary from './listeners.js';
+import { createStateAndDictionary } from './listeners.js';
 
 const app = () => {
   const inputValue = document.getElementById('url-input');
@@ -23,7 +23,7 @@ const app = () => {
         watchedState.isDataDownload = false;
         const rssData = getRssData(inputValue.value);
         rssData.then((data) => {
-          createStateAndDictionary(data.contents);
+          createStateAndDictionary(data.contents, watchedState);
           watchedState.isDataDownload = true;
           watchedState.validate = 'validateError_valid';
           watchedState.urls.unshift(inputValue.value);
