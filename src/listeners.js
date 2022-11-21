@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 const setFeeds = (unicIdFeed, children, stateData) => {
   const allFeeds = stateData.feeds;
   const feedData = {};
-  
+
   const newValueTitleFeed = children.find((el) => el.name === 'title').content;
-  const feedWithSameName = allFeeds.filter((feed) => feed.title === newValueTitleFeed)
+  const feedWithSameName = allFeeds.filter((feed) => feed.title === newValueTitleFeed);
 
   if (feedWithSameName.length !== 0) {
     return;
@@ -31,27 +31,32 @@ const setPosts = (unicIdFeed, children, stateData) => {
 
     const newValueTitlePost = el.children.find((elem) => elem.name === 'title').content;
 
-    const postWithSameTitle = allPostInState.filter((postInState) => postInState.title === newValueTitlePost);
+    const postWithSameTitle = allPostInState.filter((postInState) => {
+      let result;
+      if (postInState.title === newValueTitlePost) {
+        result = postInState;
+      }
+
+      return result;
+    });
 
     if (postWithSameTitle.length === 0) {
       const newValueDescPost = el.children.find((elem) => elem.name === 'description').content;
       const newValueLinkPost = el.children.find((elem) => elem.name === 'link').content;
-  
+
       post.id = unicIdPost;
       post.feedId = unicIdFeed;
-  
+
       post.title = newValueTitlePost;
       post.description = newValueDescPost;
       post.url = newValueLinkPost;
-  
+
       postsData.push(post);
     }
   });
 
   const stateData2 = stateData;
   stateData2.posts = [...postsData, ...stateData.posts];
-
-  // console.log('stateData.posts', stateData.posts)
 };
 
 export const createStateAndDictionary = (rssString, stateData) => {
@@ -62,42 +67,6 @@ export const createStateAndDictionary = (rssString, stateData) => {
   setFeeds(unicIdFeed, children, stateData);
   setPosts(unicIdFeed, children, stateData);
 };
-
-
-
-
-
-// const findNewPosts = (recivedData, stateData) => {
-//   if (stateData.posts.length === 0) {
-//     return recivedData;
-//   }
-
-//   let onlyNewPosts;
-//   const postsInState = stateData.posts;
-
-//   postsInState.forEach((statePost) => {
-//     onlyNewPosts = recivedData.filter((recivedPost) => statePost.id !== recivedPost.id);
-//   });
-
-//   return onlyNewPosts;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const setOpenModals = (idPost, state) => {
   const openedPost = {};

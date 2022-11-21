@@ -27,7 +27,8 @@ const app = () => {
           watchedState.isDataDownload = true;
           watchedState.validate = 'validateError_valid';
           watchedState.urls.unshift(inputValue.value);
-
+          inputValue.value = '';
+          inputValue.focus();
           if (watchedState.isTimerWork === false) {
             sheduleTimeOut();
             watchedState.isTimerWork = true;

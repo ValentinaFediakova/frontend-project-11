@@ -39,33 +39,31 @@ export const renderFeeds = (feeds) => {
   mainTitle.textContent = dictionaryData.t('feedsTitle');
 
   feeds.forEach((item) => {
-
     let isIdRendered = false;
 
     allIdFeedInHtml.forEach((feddIdInHtml) => {
       if (feddIdInHtml.dataset.feedId === item.id) {
         isIdRendered = true;
       }
-    })
+    });
 
     if (isIdRendered === false) {
       const newLiElem = document.createElement('li');
       const newH3Elem = document.createElement('h3');
       const newPElem = document.createElement('p');
-  
+
       newLiElem.classList.add('list-group-item', 'border-0', 'border-end-0');
-      newLiElem.setAttribute('data-feed-id', `${item.id}`)
+      newLiElem.setAttribute('data-feed-id', `${item.id}`);
       newH3Elem.classList.add('h6', 'm-0');
       newPElem.classList.add('m-0', 'small', 'text-black-50');
-  
+
       newH3Elem.textContent = item.title;
       newPElem.textContent = item.description;
-  
+
       newLiElem.append(newH3Elem);
       newLiElem.append(newPElem);
       namesFeedsContainer.prepend(newLiElem);
     }
-
   });
 };
 
@@ -76,23 +74,23 @@ export const renderPosts = (state) => {
   mainTitle.textContent = dictionaryData.t('postsTitle');
   const statePosts = state.posts;
 
-  for(let i = statePosts.length - 1; i >= 0; i--) {
+  for (let i = statePosts.length - 1; i >= 0; i -= 1) {
     const item = statePosts[i];
     const postId = item.id;
     let isPostExist = false;
     const allSamePostsInHtml = document.querySelectorAll('[data-post-Id]');
 
-    allSamePostsInHtml.forEach((item) => {
-      if (item.dataset.postId === postId) {
+    allSamePostsInHtml.forEach((rokoko) => {
+      if (rokoko.dataset.postId === postId) {
         isPostExist = true;
       }
-    })
+    });
 
     if (isPostExist === false) {
       const newLiElem = document.createElement('li');
       const newAElem = document.createElement('a');
       const newButtonElem = document.createElement('button');
-  
+
       newLiElem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
       newAElem.classList.add('fw-bold', 'post-link');
       newAElem.setAttribute('data-id', '2');
@@ -100,20 +98,20 @@ export const renderPosts = (state) => {
       newAElem.setAttribute('rel', 'noopener noreferrer');
       const postLink = item.url;
       newAElem.setAttribute('href', `${postLink}`);
-  
+
       newButtonElem.classList.add('btn', 'btn-outline-primary', 'btn-sm');
       newButtonElem.setAttribute('type', 'button');
       newButtonElem.setAttribute('data-id', '2');
       newButtonElem.setAttribute('data-bs-toggle', 'modal');
       newButtonElem.setAttribute('data-bs-target', '#modal');
-  
+
       newAElem.textContent = item.title;
       newAElem.setAttribute('data-post-id', `${postId}`);
-  
+
       newButtonElem.textContent = dictionaryData.t('postButton');
-  
+
       openedModalWindow(newButtonElem, postId, state);
-  
+
       newLiElem.append(newAElem);
       newLiElem.append(newButtonElem);
       namesPostsContainer.prepend(newLiElem);
