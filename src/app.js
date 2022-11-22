@@ -4,7 +4,6 @@ import getRssData from './getDataByRequest.js';
 import { watchedState } from './state.js';
 import sheduleTimeOut from './timer.js';
 import { createStateAndDictionary } from './listeners.js';
-import dictionaryData from './dictionary.js';
 
 const app = () => {
   const inputValue = document.getElementById('url-input');
@@ -24,7 +23,6 @@ const app = () => {
         watchedState.isDataDownload = false;
         const rssData = getRssData(inputValue.value);
         rssData.then((data) => {
-
           if (!data.contents.includes('<?xml') || !data.contents.includes('<rss')) {
             watchedState.validate = 'invalidResource';
             watchedState.isDataDownload = true;

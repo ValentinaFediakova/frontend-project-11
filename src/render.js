@@ -1,7 +1,7 @@
 import dictionaryData from './dictionary.js';
 import { openedModalWindow } from './listeners.js';
 
-export const renderValidationMessage = (path, value,) => {
+export const renderValidationMessage = (path, value) => {
   const errorHtmlElem = document.querySelector('.feedback');
   const inputHtml = document.getElementById('url-input');
 
@@ -34,7 +34,6 @@ export const renderValidationMessage = (path, value,) => {
     inputHtml.classList.remove('is-invalid');
     errorHtmlElem.textContent = dictionaryData.t('validateError_valid');
   }
-
 };
 
 export const renderFeeds = (feeds) => {
