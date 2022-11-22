@@ -11,7 +11,7 @@ export const renderValidationMessage = (path, value) => {
 
   errorHtmlElem.textContent = '';
 
-  if (value === 'validateError_bad_link' || value === 'validateError_already_exist' || path === 'networkError' || value === 'invalidResource') {
+  if (value !== 'validateError_valid') {
     errorHtmlElem.classList.add('text-danger');
     inputHtml.classList.add('is-invalid');
     let text;
@@ -23,6 +23,8 @@ export const renderValidationMessage = (path, value) => {
       text = dictionaryData.t('invalidResource');
     } else if (value === 'validateError_bad_link') {
       text = dictionaryData.t('validateError_bad_link');
+    } else if (value === 'ERR_NETWORK') {
+      text = dictionaryData.t('ERR_NETWORK');
     }
 
     errorHtmlElem.textContent = text;

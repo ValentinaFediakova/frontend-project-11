@@ -10,5 +10,6 @@ export default {
     validateError_bad_link: 'Ссылка должна быть валидным URL',
     validateError_already_exist: 'RSS уже существует',
     invalidResource: 'Ресурс не содержит валидный RSS',
+    ERR_NETWORK: 'Ошибка сети',
   },
 };

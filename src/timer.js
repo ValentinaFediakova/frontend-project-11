@@ -18,8 +18,8 @@ const sheduleTimeOut = () => {
       });
     });
 
-    setTimeout(getNewPosts, 9000);
-  }, 9000);
+    setTimeout(getNewPosts, 5000);
+  }, 5000);
 };
 
 export default sheduleTimeOut;

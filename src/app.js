@@ -40,7 +40,14 @@ const app = () => {
             sheduleTimeOut();
             watchedState.isTimerWork = true;
           }
-        });
+        })
+          .catch((error) => {
+            console.log('error', error.code);
+            if (error.code === 'ERR_NETWORK') {
+              watchedState.validate = 'ERR_NETWORK';
+              watchedState.isDataDownload = true;
+            }
+          });
       })
       .catch((err) => {
         console.log('err', err);
