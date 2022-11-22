@@ -99,7 +99,7 @@ export const renderPosts = (state) => {
       const newButtonElem = document.createElement('button');
 
       newLiElem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
-      newAElem.classList.add('fw-bold', 'post-link');
+      newAElem.classList.add('fw-bold');
       newAElem.setAttribute('data-id', '2');
       newAElem.setAttribute('target', '_blank');
       newAElem.setAttribute('rel', 'noopener noreferrer');
